@@ -1,0 +1,110 @@
+[tool.poetry]
+name = "Movie-Recommender-System"
+version = "0.1.0"
+description = ""
+authors = ["vlad-backmarket <vlad.corduneanu@backmarket.com>"]
+readme = "README.md"
+packages = [
+    { include = "recommender" },
+]
+
+[tool.poetry.dependencies]
+python = "=3.10.13"
+torch = "=2.2.0"
+torchvision = "~0.17"
+torchtext = "~0.17"
+torchdata = "~0.7"
+pydantic = "^2.9.2"
+pandas = "^2.2.3"
+jupyterlab = "^4.3.0"
+numpy = "==1.26.4"
+scikit-learn = "^1.5.2"
+matplotlib = "^3.9.2"
+tqdm = "^4.67.1"
+captum = "^0.7.0"
+portalocker = "~2.8"
+tensorboard = "^2.18.0"
+click = "^8.1.7"
+pre-commit = "4.0.1"
+structlog = "^24.4.0"
+pydantic-settings = "^2.6.1"
+sentence-transformers = "^3.3.1"
+transformers = "^4.47.0"
+ipywidgets = "^8.1.5"
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.pytest.ini_options]
+addopts = ""
+filterwarnings = [
+    "error",  # Make sure that warnings raise errors, to handle things like deprecations as soon as possible.
+    # overrides for the errors: schemathesis and hypothesis
+    "ignore::DeprecationWarning:hypothesis_jsonschema",
+    "ignore::DeprecationWarning:schemathesis"
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+fix = true
+
+[tool.ruff.lint]
+fixable = ["I", "UP"]
+select = [
+    # flake8-2020
+    "YTT",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-comprehensions
+    "C4",
+    # flake8-debugger
+    "T10",
+    # flake8-no-pep420
+    "INP",
+    # flake8-print
+    "T20",
+    # flake8-pytest-style
+    "PT",
+    # flake8-simplify
+    "SIM",
+    # flake8-tidy-imports
+    "TID",
+    # isort
+    "I",
+    # mccabe
+    "C90",
+    # pycodestyle
+    "E", "W",
+    # pyflakes
+    "F",
+    # pygrep-hooks
+    "PGH",
+    # pylint
+    "PLE",
+    "PLW",
+    # pyupgrade
+    "UP",
+    # ruff
+    "RUF",
+]
+ignore = [
+    # line too long (already checked by ruff format)
+    "E501",
+]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+
+[tool.ruff.lint.per-file-ignores]
+# Some modules are not part of the service package, so it's ok not to have an `__init__.py`,
+# which is why we ignore `INP001` (because it's false positives for those specific cases for us).
+"conf/*" = ["INP001"]
+"scripts/*" = ["INP001"]
